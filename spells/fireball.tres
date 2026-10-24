@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FireballSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/FireballSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/fireball_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(1, 0.5, 0.12, 1)
+spell_name = "Fireball"
+description = "Hurl a roiling sphere of flame that arcs to earth and bursts. Where it lands the ground keeps burning, and whoever stands in the blaze is set alight."
+mana_cost = 30.0
+cooldown = 1.2
+rarity = 1
+page_texture = ExtResource("2")

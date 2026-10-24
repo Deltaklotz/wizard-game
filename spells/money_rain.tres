@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MoneyRainSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/MoneyRainSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/money_rain_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.45, 0.88, 0.35, 1)
+spell_name = "Money Rain"
+description = "Call down a gilded cloud that rains banknotes in a shaft of holy light. Whoever stands in the light is healed - friend or foe."
+mana_cost = 50.0
+cooldown = 30.0
+rarity = 2
+page_texture = ExtResource("2")

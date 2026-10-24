@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://cxrhix36v6ygo"
+path="res://.godot/imported/texture_bake.glsl-bb3b836c81d53a5a5a1259774d804ed6.res"
+
+[deps]
+
+source_file="res://resource_packs/realistic/bake/texture_bake.glsl"
+dest_files=["res://.godot/imported/texture_bake.glsl-bb3b836c81d53a5a5a1259774d804ed6.res"]
+
+[params]
+

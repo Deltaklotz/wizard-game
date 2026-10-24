@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="MissileSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/MissileSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/homing_missile_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(1, 0.45, 0.15, 1)
+spell_name = "Homing Missiles"
+description = "Five blazing missiles rise from behind you one after another, arc over your head and seek your prey from afar - or rain down where you aimed - and explode on impact."
+mana_cost = 50.0
+cooldown = 9.0
+count = 5
+spawn_interval = 0.5
+launch_time = 0.35
+launch_behind = true
+follow_crosshair = false
+aim_range = 400.0
+speed = 24.0
+damage = 40.0
+lifetime = 15.0
+homing_range = 150.0
+lock_angle = 40.0
+turn_rate = 3.0
+size = 0.36
+explosive = true
+blast_radius = 3.5
+min_damage = 12.0
+self_damage = 0.3
+color = Color(1, 0.48, 0.16, 1)
+accent = Color(1, 0.88, 0.55, 1)
+rarity = 2
+page_texture = ExtResource("2")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ChainSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/ChainSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/chain_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.7, 0.92, 0.2, 1)
+spell_name = "Spectral Chain"
+description = "Loose a chain of bound souls that wanders where the eye leads. It hauls the caster to whatever it bites into, or drags a foe to the caster's feet. Every fathom drinks mana as it flies; cast again to let it shatter."
+mana_cost = 4.0
+cooldown = 0.6
+page_texture = ExtResource("2")

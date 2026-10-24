@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InfernoSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/InfernoSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/inferno_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(1, 0.14, 0.4, 1)
+spell_name = "Infernal Torrent"
+description = "Tear open the book's last page and let the abyss breathe. A torrent of crimson fire and black smoke roars out wherever you look, widening as it goes, burning and hurling back all it swallows."
+mana_cost = 60.0
+cooldown = 14.0
+rarity = 2
+page_texture = ExtResource("2")

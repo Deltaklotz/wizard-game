@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SmokeSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/SmokeSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/smoke_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.66, 0.58, 0.9, 1)
+spell_name = "Smoke Bomb"
+description = "Lob a hissing orb that bursts into a wall of thick smoke. No eye can pierce it - not even your own."
+mana_cost = 25.0
+cooldown = 10.0
+rarity = 0
+page_texture = ExtResource("2")

@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dyhl64vc05tol"
+path="res://.godot/imported/texture_bake.glsl-369d5a37dcd4ea59ac0fc88b1370d36c.res"
+
+[deps]
+
+source_file="res://shaders/compute/texture_bake.glsl"
+dest_files=["res://.godot/imported/texture_bake.glsl-369d5a37dcd4ea59ac0fc88b1370d36c.res"]
+
+[params]
+

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="510" viewBox="0 0 360 510">
+  <!-- Grimoire page artwork for the Homing Missiles spell: the frame and one symbol in the middle (at
+       180,255; the page shader draws the spinning arcane circle behind it, radius ~142).
+       Transparent background: only the ink is drawn onto the parchment. Edit freely. -->
+  <g fill="none" stroke="#2b1a0e" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Page frame with corner knots -->
+    <rect x="22" y="22" width="316" height="466" rx="6" stroke-width="2.2" opacity="0.8"/>
+    <rect x="30" y="30" width="300" height="450" rx="4" stroke-width="1" opacity="0.6"/>
+    <g stroke-width="1.6" opacity="0.8">
+      <path d="M30 52 q14 -2 22 -22 M308 30 q2 14 22 22 M30 458 q14 2 22 22 M308 480 q2 -14 22 -22"/>
+      <circle cx="41" cy="41" r="4"/><circle cx="319" cy="41" r="4"/>
+      <circle cx="41" cy="469" r="4"/><circle cx="319" cy="469" r="4"/>
+    </g>
+
+    <!-- Symbol -->
+    <g transform="translate(180 255)">
+    <path d="M-20 90 C-80 40 -80 -40 -10 -70" stroke-width="5" stroke-dasharray="12 8"/>
+    <path d="M20 90 C80 40 80 -40 10 -70" stroke-width="5" stroke-dasharray="12 8"/>
+    <circle cx="0" cy="-90" r="30" stroke="#c0400c" stroke-width="6"/>
+    <path d="M0 -136 v20 M0 -64 v20 M-46 -90 h20 M26 -90 h20" stroke-width="4"/>
+    <circle cx="0" cy="-90" r="6" stroke="#c0400c" stroke-width="4"/>
+    <path d="M-20 90 l-14 18 M-20 90 l6 22 M20 90 l14 18 M20 90 l-6 22" stroke="#c0400c" stroke-width="4"/>
+    </g>
+  </g>
+</svg>

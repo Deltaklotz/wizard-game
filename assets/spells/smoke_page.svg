@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="510" viewBox="0 0 360 510">
+  <!-- Grimoire page artwork for the Smoke Bomb spell: the frame and one symbol in the middle (at
+       180,255; the page shader draws the spinning arcane circle behind it, radius ~142).
+       Transparent background: only the ink is drawn onto the parchment. Edit freely. -->
+  <g fill="none" stroke="#2b1a0e" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Page frame with corner knots -->
+    <rect x="22" y="22" width="316" height="466" rx="6" stroke-width="2.2" opacity="0.8"/>
+    <rect x="30" y="30" width="300" height="450" rx="4" stroke-width="1" opacity="0.6"/>
+    <g stroke-width="1.6" opacity="0.8">
+      <path d="M30 52 q14 -2 22 -22 M308 30 q2 14 22 22 M30 458 q14 2 22 22 M308 480 q2 -14 22 -22"/>
+      <circle cx="41" cy="41" r="4"/><circle cx="319" cy="41" r="4"/>
+      <circle cx="41" cy="469" r="4"/><circle cx="319" cy="469" r="4"/>
+    </g>
+
+    <!-- Symbol -->
+    <g transform="translate(180 255)">
+    <circle cx="0" cy="56" r="34" stroke-width="6"/>
+    <path d="M18 26 q10 -16 4 -30" stroke-width="4"/>
+    <path d="M24 -8 l6 -10 M18 -10 l-8 -8 M28 -2 l12 -2" stroke="#7a5ccf" stroke-width="3.5"/>
+    <path d="M-60 -10 C-96 -14 -98 -60 -64 -64 C-62 -100 -14 -108 -2 -84 C14 -112 70 -104 66 -66 C100 -62 100 -14 64 -14" stroke="#5b4a8a" stroke-width="5"/>
+    <path d="M-40 -40 q20 -16 40 0 q20 16 40 0" stroke="#5b4a8a" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MinigunSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/MinigunSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/minigun_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.72, 0.32, 1, 1)
+spell_name = "Arcane Minigun"
+description = "Hold to wake the spinning crystal barrels and loose an endless storm of spellshot. Each orb costs a drop of mana; let it rest before the crystals crack with heat."
+mana_cost = 1.0
+cooldown = 0.0
+page_texture = ExtResource("2")
+cast_kick = 0.18
+cast_gesture = false
+hold_fire = true

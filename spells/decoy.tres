@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DecoySpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/DecoySpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/decoy_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.55, 0.9, 1, 1)
+spell_name = "Decoy"
+description = "Split off an illusion of yourself that sprints away, dashes and pretends to aim. One touch and it vanishes in a puff."
+mana_cost = 25.0
+cooldown = 10.0
+rarity = 1
+page_texture = ExtResource("2")

@@ -1,0 +1,14 @@
+; Wizard Game dedicated server (separate Godot project, run headless).
+; See server.gd for command-line options.
+
+config_version=5
+
+[application]
+
+config/name="Wizard Game Server"
+run/main_scene="res://Server.tscn"
+config/features=PackedStringArray("4.7")
+
+[audio]
+
+driver/driver="Dummy"

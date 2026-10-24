@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ShieldWallSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/ShieldWallSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/shield_wall_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.4, 0.78, 1, 1)
+spell_name = "Hex Ward"
+description = "Raise a ward of hexagons before you. Turn the wheel to let it grow ring upon ring, or shrink back to a single plate. Every blow it turns aside drinks your mana; cast again to lower it."
+mana_cost = 0.0
+cooldown = 0.5
+page_texture = ExtResource("2")

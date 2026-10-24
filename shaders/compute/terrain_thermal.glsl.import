@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://hpunp27wkgpg"
+path="res://.godot/imported/terrain_thermal.glsl-658a5dfeb873971d7bed8a882367b350.res"
+
+[deps]
+
+source_file="res://shaders/compute/terrain_thermal.glsl"
+dest_files=["res://.godot/imported/terrain_thermal.glsl-658a5dfeb873971d7bed8a882367b350.res"]
+
+[params]
+

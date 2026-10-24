@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BlackHoleSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/BlackHoleSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/black_hole_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.42, 0.3, 1, 1)
+spell_name = "Event Horizon"
+description = "Pour out every drop of mana into a single mote of light. It rises, tears the sky, and births a hungry dark that drags all things into itself, ever harder, for thirty heartbeats. Nothing that touches its edge returns."
+mana_cost = 50.0
+cooldown = 120.0
+page_texture = ExtResource("2")

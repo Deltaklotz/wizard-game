@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SniperSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/SniperSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/sniper_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(1, 0.18, 0.14, 1)
+spell_name = "Sniper Beam"
+description = "Hold to scope in; release to loose a lance of concentrated arcane fire. The eye must rest on the target for two heartbeats before it answers."
+mana_cost = 45.0
+cooldown = 1.5
+page_texture = ExtResource("2")
+aimed = true
+min_aim_time = 2.0
+aim_zoom = 4.0
+aim_move_factor = 0.45
+aim_scope = true

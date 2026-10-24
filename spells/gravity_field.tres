@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GravityFieldSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/GravityFieldSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/gravity_field_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.5, 0.32, 1, 1)
+spell_name = "Gravity Field"
+description = "Brand a far-off patch of ground with an endless pillar of crushing gravity. Anything flying above it is dragged down to earth."
+mana_cost = 40.0
+cooldown = 14.0
+aimed = true
+rarity = 2
+page_texture = ExtResource("2")

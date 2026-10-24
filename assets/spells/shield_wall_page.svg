@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="510" viewBox="0 0 360 510">
+  <!-- Grimoire page artwork for the Hex Ward spell: the frame and one symbol in the middle (at
+       180,255; the page shader draws the spinning arcane circle behind it, radius ~142).
+       Transparent background: only the ink is drawn onto the parchment. Edit freely. -->
+  <g fill="none" stroke="#2b1a0e" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Page frame with corner knots -->
+    <rect x="22" y="22" width="316" height="466" rx="6" stroke-width="2.2" opacity="0.8"/>
+    <rect x="30" y="30" width="300" height="450" rx="4" stroke-width="1" opacity="0.6"/>
+    <g stroke-width="1.6" opacity="0.8">
+      <path d="M30 52 q14 -2 22 -22 M308 30 q2 14 22 22 M30 458 q14 2 22 22 M308 480 q2 -14 22 -22"/>
+      <circle cx="41" cy="41" r="4"/><circle cx="319" cy="41" r="4"/>
+      <circle cx="41" cy="469" r="4"/><circle cx="319" cy="469" r="4"/>
+    </g>
+
+    <!-- Symbol -->
+    <g transform="translate(180 255)">
+    <path d="M86.6 50.0 L0.0 100.0 L-86.6 50.0 L-86.6 -50.0 L-0.0 -100.0 L86.6 -50.0 Z" stroke-width="7"/>
+    <path d="M24.2 14.0 L0.0 28.0 L-24.2 14.0 L-24.2 -14.0 L-0.0 -28.0 L24.2 -14.0 Z M72.7 14.0 L48.5 28.0 L24.2 14.0 L24.2 -14.0 L48.5 -28.0 L72.7 -14.0 Z M48.5 56.0 L24.2 70.0 L0.0 56.0 L0.0 28.0 L24.2 14.0 L48.5 28.0 Z M0.0 56.0 L-24.2 70.0 L-48.5 56.0 L-48.5 28.0 L-24.2 14.0 L0.0 28.0 Z M-24.2 14.0 L-48.5 28.0 L-72.7 14.0 L-72.7 -14.0 L-48.5 -28.0 L-24.2 -14.0 Z M-0.0 -28.0 L-24.2 -14.0 L-48.5 -28.0 L-48.5 -56.0 L-24.2 -70.0 L-0.0 -56.0 Z M48.5 -28.0 L24.2 -14.0 L0.0 -28.0 L0.0 -56.0 L24.2 -70.0 L48.5 -56.0 Z" stroke="#2a86c9" stroke-width="4"/>
+    </g>
+  </g>
+</svg>

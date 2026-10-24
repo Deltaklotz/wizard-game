@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MissileSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/MissileSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/magic_missile_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.75, 0.42, 1, 1)
+spell_name = "Magic Missiles"
+description = "Loose three arcane darts, one after another, that hunt down the nearest foe in front of you - or follow your gaze. They don't fly far."
+mana_cost = 30.0
+cooldown = 3.0
+spawn_interval = 0.5
+max_distance = 45.0
+aim_range = 60.0
+homing_range = 35.0
+rarity = 0
+page_texture = ExtResource("2")

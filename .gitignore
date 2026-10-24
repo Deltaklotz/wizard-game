@@ -1,0 +1,30 @@
+# Godot import cache and editor state (rebuilt by `--import`)
+.godot/
+*.tmp
+
+# Godot executables (play.bat downloads them)
+Godot_v*.exe
+Godot_v*.zip
+
+# Updater state
+.version
+
+# Blender working files
+*.blend
+*.blend1
+
+# Music tooling: big binaries and renders stay local (scripts in music/ are tracked)
+music/bin/
+music/soundfonts/
+music/out/
+music/*.wav
+
+# Temporary dev scripts
+tools/_*.gd
+tools/_*.gd.uid
+
+# Stray import file without its source
+/Flying Back Death.fbx.import
+
+# Godot default
+/android/

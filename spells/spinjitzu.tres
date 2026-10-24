@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpinjitzuSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/SpinjitzuSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/spinjitzu_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(1, 0.72, 0.2, 1)
+spell_name = "Spinjitzu"
+description = "Spin into a whirling tornado of light. You move faster, and whoever you touch is struck and flung away. Cast again to stop; it drains mana while it spins."
+mana_cost = 10.0
+cooldown = 1.0
+rarity = 1
+page_texture = ExtResource("2")

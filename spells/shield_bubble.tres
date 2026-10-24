@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ShieldBubbleSpell" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/spells/ShieldBubbleSpell.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/spells/shield_bubble_page.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+theme_color = Color(0.4, 0.78, 1, 1)
+spell_name = "Aegis Dome"
+description = "A dome of interlocking wards rises around the caster. It drinks every blow from without until its tiles crack and it shatters, or its time runs out."
+mana_cost = 40.0
+cooldown = 12.0
+page_texture = ExtResource("2")

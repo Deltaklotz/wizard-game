@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="510" viewBox="0 0 360 510">
+  <!-- Grimoire page artwork for the Magic Missiles spell: the frame and one symbol in the middle (at
+       180,255; the page shader draws the spinning arcane circle behind it, radius ~142).
+       Transparent background: only the ink is drawn onto the parchment. Edit freely. -->
+  <g fill="none" stroke="#2b1a0e" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Page frame with corner knots -->
+    <rect x="22" y="22" width="316" height="466" rx="6" stroke-width="2.2" opacity="0.8"/>
+    <rect x="30" y="30" width="300" height="450" rx="4" stroke-width="1" opacity="0.6"/>
+    <g stroke-width="1.6" opacity="0.8">
+      <path d="M30 52 q14 -2 22 -22 M308 30 q2 14 22 22 M30 458 q14 2 22 22 M308 480 q2 -14 22 -22"/>
+      <circle cx="41" cy="41" r="4"/><circle cx="319" cy="41" r="4"/>
+      <circle cx="41" cy="469" r="4"/><circle cx="319" cy="469" r="4"/>
+    </g>
+
+    <!-- Symbol -->
+    <g transform="translate(180 255)">
+    <path d="M-80 70 C-40 40 -10 -20 -40 -90" stroke-width="4" stroke-dasharray="10 7"/>
+    <path d="M0 80 C10 20 -10 -40 10 -100" stroke-width="4" stroke-dasharray="10 7"/>
+    <path d="M80 70 C40 40 20 -20 60 -86" stroke-width="4" stroke-dasharray="10 7"/>
+    <path d="M-40 -90 l-12 -2 6 -10 6 12 10 -6 -4 12 Z M10 -100 l-10 -6 10 -8 2 12 12 -2 -10 8 Z M60 -86 l-8 -10 12 -4 -2 12 12 4 -12 4 Z" stroke="#7a3cc8" stroke-width="4"/>
+    <circle cx="-40" cy="-90" r="16" stroke="#7a3cc8" stroke-width="3"/>
+    <circle cx="10" cy="-100" r="16" stroke="#7a3cc8" stroke-width="3"/>
+    <circle cx="60" cy="-86" r="16" stroke="#7a3cc8" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="510" viewBox="0 0 360 510">
+  <!-- Grimoire page artwork for the Spectral Chain spell: the frame and one symbol in the middle (at
+       180,255; the page shader draws the spinning arcane circle behind it, radius ~142).
+       Transparent background: only the ink is drawn onto the parchment. Edit freely. -->
+  <g fill="none" stroke="#2b1a0e" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Page frame with corner knots -->
+    <rect x="22" y="22" width="316" height="466" rx="6" stroke-width="2.2" opacity="0.8"/>
+    <rect x="30" y="30" width="300" height="450" rx="4" stroke-width="1" opacity="0.6"/>
+    <g stroke-width="1.6" opacity="0.8">
+      <path d="M30 52 q14 -2 22 -22 M308 30 q2 14 22 22 M30 458 q14 2 22 22 M308 480 q2 -14 22 -22"/>
+      <circle cx="41" cy="41" r="4"/><circle cx="319" cy="41" r="4"/>
+      <circle cx="41" cy="469" r="4"/><circle cx="319" cy="469" r="4"/>
+    </g>
+
+    <!-- Symbol -->
+    <g transform="translate(180 255)">
+    <g transform="rotate(-40)">
+      <rect x="-104" y="-26" width="76" height="52" rx="26" stroke-width="9"/>
+      <rect x="28" y="-26" width="76" height="52" rx="26" stroke-width="9"/>
+      <rect x="-44" y="-10" width="88" height="20" rx="10" stroke="#7a9d10" stroke-width="8"/>
+    </g>
+    </g>
+  </g>
+</svg>
