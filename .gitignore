@@ -28,3 +28,7 @@ tools/_*.gd.uid
 
 # Godot default
 /android/
+
+# macOS / Linux Godot (update.sh downloads them)
+Godot.app/
+Godot_v*_linux.*

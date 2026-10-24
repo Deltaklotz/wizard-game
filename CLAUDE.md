@@ -640,6 +640,18 @@ SoundFont "Expr." presets (bank 17/21/26…: flute, violin sections, choir) take
 choir for weight, harp; no piano (rarely) – a general palette, not every piece needs all of it. User
 prefers action-packed, fast battle music with an energetic, fluctuating flute lead. Final tracks will go to `assets/music/`.
 
+## Repository & launcher
+
+GitHub: `Deltaklotz/wizard-game` (branch `main`). Not in git: `.godot/`, Godot executables, `*.blend`, music
+binaries/renders. **Launchers** update from GitHub, download Godot if missing, import, then start the game:
+`play.bat` → `update.ps1` (Windows; `-Server` starts the server) and `play.command` → `update.sh` (macOS, Linux runs
+`update.sh`; `--server`; `run_server.command` uses it). In a git checkout they `git pull`; otherwise they compare the
+latest commit SHA (GitHub API) with `.version` and download the commit zip, mirroring each top-level folder
+(robocopy /MIR / rsync --delete) so removed files disappear. A lone `play.bat` / `play.command` in an empty folder
+bootstraps everything. Needs the repo to be **public** for players without a GitHub login. Bump `GodotVersion` /
+`GODOT_VERSION` in both scripts when the engine changes. Keep `play.bat` a single line (it may be replaced while
+it runs). Scripts are committed executable (`git update-index --chmod=+x`).
+
 ## Dev tools (`tools/`, run without `--headless`)
 
 - `screenshot.gd`: loads the game, waits for generation, renders views to `$SHOT_DIR/shot_N.png` and prints
