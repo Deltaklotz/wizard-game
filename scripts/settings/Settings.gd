@@ -85,8 +85,16 @@ const DEFAULTS := {
 	"player_name": "",
 	"player_color": "c9483a",
 	"server_address": "127.0.0.1",
+	# Host page: world (0 = continue the last one, 1 = new random, 2 = chosen seed), seed, port,
+	# forget discovered places, custom balance file ("" = the game's config/balance.cfg).
+	"host_world": 0,
+	"host_seed": 1234,
+	"host_port": 8910,
+	"host_reset_discovered": false,
+	"host_balance": "",
 }
-const PROFILE_KEYS := ["player_name", "player_color", "server_address"]
+const PROFILE_KEYS := ["player_name", "player_color", "server_address", "host_world", "host_seed", "host_port",
+	"host_reset_discovered", "host_balance"]
 
 ## Graphics presets (Settings → Graphics). "Very Low" / "Low" are for weak and integrated
 ## GPUs: performance shaders, 2 shadow cascades, a coarser grass grid, shorter vegetation

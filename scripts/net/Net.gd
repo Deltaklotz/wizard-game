@@ -57,10 +57,51 @@ var _download_size := 0
 ## Server clock minus local clock (see world_time()).
 var _clock_offset := 0.0
 var _clock_synced := false
+## Server process started from the title screen's Host page (-1 = none) and its log file.
+var hosted_pid := -1
+const HOSTED_LOG := "user://hosted_server.log"
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
+## Hosting from the menu: starts the server (server/ project) as a background process of this
+## same Godot executable, headless, with `args` (e.g. --port 8910 --new-world). It also gets
+## --quit-when-empty, so it shuts itself down if this game crashes. Returns false on failure.
+func start_hosted_server(args: PackedStringArray) -> bool:
+	stop_hosted_server()
+	var all := PackedStringArray(["--headless", "--log-file", ProjectSettings.globalize_path(HOSTED_LOG),
+		"--path", ProjectSettings.globalize_path("res://server"), "--"])
+	all.append_array(args)
+	all.append("--quit-when-empty")
+	hosted_pid = OS.create_process(OS.get_executable_path(), all, false)
+	return hosted_pid > 0
+
+
+func is_hosted_server_running() -> bool:
+	return hosted_pid > 0 and OS.is_process_running(hosted_pid)
+
+
+## Stops the menu-hosted server (if any). Everyone on it is disconnected.
+func stop_hosted_server() -> void:
+	if hosted_pid > 0 and OS.is_process_running(hosted_pid):
+		OS.kill(hosted_pid)
+	hosted_pid = -1
+
+
+## Last lines of the hosted server's log (to explain why it failed to start).
+func hosted_server_log(lines := 4) -> String:
+	var f := FileAccess.open(HOSTED_LOG, FileAccess.READ)
+	if f == null:
+		return ""
+	var all := f.get_as_text().strip_edges().split("\n")
+	return "\n".join(all.slice(maxi(0, all.size() - lines)))
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_PREDELETE:
+		stop_hosted_server()
 
 
 ## Shared world clock in seconds: the server's uptime online (estimated from its "clock"

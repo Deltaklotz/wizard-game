@@ -24,6 +24,19 @@ var _color := Color.WHITE
 var _preview_root: Node3D
 var _preview_model: Node3D
 var _busy := false
+## The connect page in Host mode (start a server here, then join it) instead of Join mode.
+var _hosting := false
+var _heading: Label
+var _join_box: VBoxContainer
+var _host_box: VBoxContainer
+var _world_option: OptionButton
+var _seed_spin: SpinBox
+var _port_spin: SpinBox
+var _reset_check: CheckBox
+var _balance_edit: LineEdit
+var _lan_label: Label
+## Connection attempts while the hosted server is still starting up.
+var _host_tries := 0
 
 
 func _ready() -> void:
@@ -107,7 +120,8 @@ func _build_menu() -> void:
 	_menu.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_menu.custom_minimum_size.x = 320
 	_menu.add_theme_constant_override("separation", 14)
-	_menu.add_child(_button("Start", _show_connect))
+	_menu.add_child(_button("Host", func() -> void: _show_connect(true)))
+	_menu.add_child(_button("Join", func() -> void: _show_connect(false)))
 	_menu.add_child(_button("Settings", func() -> void: _settings.open_settings()))
 	_menu.add_child(_button("Quit", func() -> void:
 		Settings.save_settings()
@@ -131,7 +145,14 @@ func _show_menu() -> void:
 	(_menu.get_child(0) as Button).grab_focus()
 
 
-func _show_connect() -> void:
+func _show_connect(host := false) -> void:
+	_hosting = host
+	_heading.text = "Host a Game" if host else "Join a Game"
+	_connect_button.text = "Host" if host else "Connect"
+	_join_box.visible = not host
+	_host_box.visible = host
+	if host:
+		_refresh_host_info()
 	_title_box.visible = false
 	_menu.visible = false
 	_connect.visible = true
@@ -161,12 +182,12 @@ func _build_connect() -> void:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 14)
 	_connect.add_child(box)
-	var heading := Label.new()
-	heading.text = "Join a Game"
-	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	heading.add_theme_font_size_override("font_size", 34)
-	heading.add_theme_color_override("font_color", UiTheme.GOLD)
-	box.add_child(heading)
+	_heading = Label.new()
+	_heading.text = "Join a Game"
+	_heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_heading.add_theme_font_size_override("font_size", 34)
+	_heading.add_theme_color_override("font_color", UiTheme.GOLD)
+	box.add_child(_heading)
 
 	var cols := HBoxContainer.new()
 	cols.add_theme_constant_override("separation", 28)
@@ -218,18 +239,22 @@ func _build_connect() -> void:
 		_set_color(c))
 	swatches.add_child(_custom_color)
 
-	form.add_child(_field_label("Server address"))
+	_join_box = VBoxContainer.new()
+	_join_box.add_theme_constant_override("separation", 8)
+	form.add_child(_join_box)
+	_join_box.add_child(_field_label("Server address"))
 	_address_edit = LineEdit.new()
 	_address_edit.placeholder_text = "e.g. 192.168.0.12  (port %d unless given as ip:port)" % Net.DEFAULT_PORT
 	_address_edit.text = Settings.get_value("server_address")
 	_address_edit.text_submitted.connect(func(_t: String) -> void: _on_connect())
-	form.add_child(_address_edit)
+	_join_box.add_child(_address_edit)
 	var hint := Label.new()
-	hint.text = "The host starts run_server.bat; its window lists the addresses to use."
+	hint.text = "Ask the host for the address shown on their Host page."
 	hint.add_theme_font_size_override("font_size", 15)
 	hint.add_theme_color_override("font_color", UiTheme.TEXT_DIM)
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	form.add_child(hint)
+	_join_box.add_child(hint)
+	form.add_child(_build_host_options())
 
 	cols.add_child(_build_preview())
 
@@ -259,6 +284,109 @@ func _build_connect() -> void:
 	_set_color(saved)
 	if not matched:
 		_custom_color.color = saved
+
+
+## Host page: the server's command-line flags as controls (remembered in Settings).
+func _build_host_options() -> VBoxContainer:
+	_host_box = VBoxContainer.new()
+	_host_box.add_theme_constant_override("separation", 8)
+	_host_box.add_child(_field_label("World"))
+	var world_row := HBoxContainer.new()
+	world_row.add_theme_constant_override("separation", 8)
+	_host_box.add_child(world_row)
+	_world_option = OptionButton.new()
+	_world_option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for text in ["Continue the last world", "New random world", "Choose a seed"]:
+		_world_option.add_item(text)
+	_world_option.selected = clampi(int(Settings.get_value("host_world")), 0, 2)
+	world_row.add_child(_world_option)
+	_seed_spin = SpinBox.new()
+	_seed_spin.min_value = 1
+	_seed_spin.max_value = 999999
+	_seed_spin.value = int(Settings.get_value("host_seed"))
+	_seed_spin.custom_minimum_size.x = 130
+	_seed_spin.tooltip_text = "World seed: the same seed always makes the same world."
+	world_row.add_child(_seed_spin)
+	_world_option.item_selected.connect(func(_i: int) -> void: _refresh_host_info())
+
+	var port_row := HBoxContainer.new()
+	port_row.add_theme_constant_override("separation", 8)
+	_host_box.add_child(port_row)
+	var port_label := _field_label("Port")
+	port_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	port_row.add_child(port_label)
+	_port_spin = SpinBox.new()
+	_port_spin.min_value = 1024
+	_port_spin.max_value = 65535
+	_port_spin.value = int(Settings.get_value("host_port"))
+	_port_spin.custom_minimum_size.x = 130
+	_port_spin.value_changed.connect(func(_v: float) -> void: _refresh_host_info())
+	port_row.add_child(_port_spin)
+
+	_reset_check = CheckBox.new()
+	_reset_check.text = "Forget discovered places"
+	_reset_check.tooltip_text = "Hidden places found in this world show up as undiscovered again."
+	_reset_check.button_pressed = bool(Settings.get_value("host_reset_discovered"))
+	_host_box.add_child(_reset_check)
+
+	_host_box.add_child(_field_label("Balance file (optional)"))
+	_balance_edit = LineEdit.new()
+	_balance_edit.placeholder_text = "config/balance.cfg"
+	_balance_edit.text = str(Settings.get_value("host_balance"))
+	_balance_edit.tooltip_text = "Spell and player numbers for everyone in your game. Empty = the game's config/balance.cfg."
+	_host_box.add_child(_balance_edit)
+
+	_lan_label = Label.new()
+	_lan_label.add_theme_font_size_override("font_size", 15)
+	_lan_label.add_theme_color_override("font_color", UiTheme.TEXT_DIM)
+	_lan_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_host_box.add_child(_lan_label)
+	return _host_box
+
+
+## Seed field only for "Choose a seed"; the last world's seed in the option text; the addresses
+## friends join with.
+func _refresh_host_info() -> void:
+	_seed_spin.visible = _world_option.selected == 2
+	var last := _last_server_seed()
+	_world_option.set_item_text(0, "Continue the last world" + (" (seed %d)" % last if last > 0 else ""))
+	var port := int(_port_spin.value)
+	var ips := PackedStringArray()
+	for ip in _lan_addresses():
+		ips.append(ip if port == Net.DEFAULT_PORT else "%s:%d" % [ip, port])
+	_lan_label.text = "Friends on your network join with: %s" % (", ".join(ips) if not ips.is_empty() else "127.0.0.1") \
+		+ ("\nFriends over the internet need port %d forwarded on your router." % port)
+
+
+## Addresses friends can join with: home network (192.168.x) first, then others such as VPNs
+## (ZeroTier/Hamachi 10.x/25.x). Skipped: loopback, link-local, Hyper-V/WSL/Docker (172.16-31.x)
+## and x.x.x.1 (host side of virtual adapters like VMware's). At most three; all if that leaves none.
+static func _lan_addresses() -> PackedStringArray:
+	var home := PackedStringArray()
+	var other := PackedStringArray()
+	var any := PackedStringArray()
+	for ip in IP.get_local_addresses():
+		if ip.count(".") != 3 or ip.begins_with("127.") or ip.begins_with("169.254."):
+			continue
+		any.append(ip)
+		var parts := ip.split(".")
+		if ip.ends_with(".1") or (parts[0] == "172" and int(parts[1]) >= 16 and int(parts[1]) <= 31):
+			continue
+		if ip.begins_with("192.168."):
+			home.append(ip)
+		else:
+			other.append(ip)
+	home.append_array(other)
+	return (home if not home.is_empty() else any).slice(0, 3)
+
+
+## The seed the server used last (its server.cfg, next to this game's user folder), or 0.
+func _last_server_seed() -> int:
+	var dir := ProjectSettings.globalize_path("user://").trim_suffix("/").get_base_dir()
+	var cfg := ConfigFile.new()
+	if cfg.load(dir.path_join("Wizard Game Server").path_join("server.cfg")) != OK:
+		return 0
+	return int(cfg.get_value("world", "seed", 0))
 
 
 func _field_label(text: String) -> Label:
@@ -371,15 +499,63 @@ func _on_connect() -> void:
 		return
 	Settings.set_value("player_name", _name_edit.text.strip_edges())
 	Settings.set_value("player_color", _color.to_html(false))
+	_progress.visible = false
+	if _hosting:
+		_start_hosting()
+		return
 	Settings.set_value("server_address", _address_edit.text.strip_edges())
 	_set_busy(true)
-	_progress.visible = false
 	Net.connect_to_host(_address_edit.text, _nickname(), _color)
+
+
+## Host: start the server in the background with the chosen flags, then join it like anyone else.
+func _start_hosting() -> void:
+	var port := int(_port_spin.value)
+	Settings.set_value("host_world", _world_option.selected)
+	Settings.set_value("host_seed", int(_seed_spin.value))
+	Settings.set_value("host_port", port)
+	Settings.set_value("host_reset_discovered", _reset_check.button_pressed)
+	Settings.set_value("host_balance", _balance_edit.text.strip_edges())
+	Settings.save_settings()
+	var args := PackedStringArray(["--port", str(port)])
+	match _world_option.selected:
+		1:
+			args.append("--new-world")
+		2:
+			args.append_array(["--seed", str(int(_seed_spin.value))])
+	if _reset_check.button_pressed:
+		args.append("--reset-discovered")
+	var balance := _balance_edit.text.strip_edges()
+	if not balance.is_empty():
+		if balance.is_relative_path():
+			balance = ProjectSettings.globalize_path("res://").path_join(balance)
+		args.append_array(["--balance", balance])
+	if not Net.start_hosted_server(args):
+		_set_status("Could not start the server.", true)
+		return
+	_set_busy(true)
+	_host_tries = 0
+	_set_status("Starting the server…", false)
+	await get_tree().create_timer(1.0).timeout
+	_join_hosted()
+
+
+func _join_hosted() -> void:
+	if not _busy:
+		return
+	if not Net.is_hosted_server_running():
+		_set_busy(false)
+		var log := Net.hosted_server_log()
+		_set_status("The server stopped." + ("\n" + log if not log.is_empty() else "") \
+			+ ("\n(Is port %d already in use? Try another port.)" % int(_port_spin.value)), true)
+		return
+	Net.connect_to_host("127.0.0.1:%d" % int(_port_spin.value), _nickname(), _color)
 
 
 func _on_back() -> void:
 	if _busy:
 		Net.leave()
+		Net.stop_hosted_server()
 		_set_busy(false)
 		_set_status("Cancelled.", false)
 		return
@@ -391,6 +567,13 @@ func _set_busy(on: bool) -> void:
 	_connect_button.disabled = on
 	_name_edit.editable = not on
 	_address_edit.editable = not on
+	for c: Control in [_world_option, _seed_spin, _port_spin, _reset_check, _balance_edit]:
+		if c is BaseButton:
+			(c as BaseButton).disabled = on
+		elif c is SpinBox:
+			(c as SpinBox).editable = not on
+		elif c is LineEdit:
+			(c as LineEdit).editable = not on
 	_back_button.text = "Cancel" if on else "Back"
 
 
@@ -404,6 +587,15 @@ func _on_status(text: String) -> void:
 
 
 func _on_failed(reason: String) -> void:
+	# A server we just started may not be listening yet: keep trying for a while.
+	if _hosting and _busy and _host_tries < 15 and Net.is_hosted_server_running() and Net.state == Net.State.OFFLINE:
+		_host_tries += 1
+		Net.last_error = ""
+		_set_status("Waiting for the server…", false)
+		get_tree().create_timer(0.7).timeout.connect(_join_hosted)
+		return
+	if _hosting:
+		Net.stop_hosted_server()
 	_set_busy(false)
 	_progress.visible = false
 	_set_status(reason, true)

@@ -507,9 +507,16 @@ walk up), pillar cylinder, box per menhir. Marked on the map (inked symbol + pat
 label).
 
 ### Multiplayer (`server/`, `scripts/net/`)
-- **Server** = separate headless Godot project `server/` (`server.gd`, `Server.tscn`), started with
-  `run_server.bat` (`--port 8910`, `--seed N`, `--new-world`; otherwise reuses the last seed from
-  `user://server.cfg`). Prints its LAN addresses. WebSocket (TCPServer + WebSocketPeer), JSON text messages
+- **Server** = separate headless Godot project `server/` (`server.gd`, `Server.tscn`), started either from the
+  title screen's **Host** page or headless with `run_server.bat` (`--port 8910`, `--seed N`, `--new-world`,
+  `--reset-discovered`, `--balance file`, `--quit-when-empty`; otherwise reuses the last seed from `user://server.cfg`).
+  Host page (`TitleScreen._build_host_options`, values in Settings `host_*`): world (continue last – seed read from
+  the server's server.cfg / new random / chosen seed), port, forget discovered places, balance file; shows the
+  addresses friends join with (`_lan_addresses`: 192.168.x first, skips x.x.x.1 and 172.16–31 virtual adapters).
+  `Net.start_hosted_server` runs this same Godot executable headless on `res://server` as a background process
+  (log in `user://hosted_server.log`, always `--quit-when-empty`: shuts down 20 s after the last player left / 5 min
+  with nobody, so a crashed host leaves nothing running), then the title screen joins `127.0.0.1:port`, retrying
+  while the server boots. Leaving / quitting / closing stops it (`Net.stop_hosted_server`). Prints its LAN addresses. WebSocket (TCPServer + WebSocketPeer), JSON text messages
   `{"t": ...}`: `hello`/`welcome`/`reject`, `join`/`leave`, `state` → batched `states` (20 Hz tick – put
   future server-side enemies in `_tick()`), `cast` and generic `event` relayed with the sender `id`.
   `clock` (1 Hz, server uptime → `Net.world_time()`).

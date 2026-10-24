@@ -158,12 +158,15 @@ func _reset_view() -> void:
 
 func _leave() -> void:
 	Net.leave()
+	# The host leaving ends the game they host.
+	Net.stop_hosted_server()
 	get_tree().paused = false
 	get_tree().change_scene_to_file(TITLE_SCENE)
 
 
 func _quit() -> void:
 	Settings.save_settings()
+	Net.stop_hosted_server()
 	get_tree().quit()
 
 

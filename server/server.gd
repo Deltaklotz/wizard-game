@@ -13,9 +13,11 @@ extends Node
 ##   first player who asks (broadcast "item_gone" with the taker), so an item is never duplicated.
 ##
 ## Run (from the game folder):
-##   Godot_v4.7.2-stable_win64_console.exe --headless --path server -- [--port 8910] [--seed 1234] [--new-world] [--reset-discovered] [--balance file]
+##   Godot_v4.7.2-stable_win64_console.exe --headless --path server -- [--port 8910] [--seed 1234] [--new-world] [--reset-discovered] [--quit-when-empty] [--balance file]
 ## Without --seed the last world is reused; --new-world rolls a new random seed.
 ## Discovered places (hidden sites) are remembered per seed; --reset-discovered forgets them.
+## --quit-when-empty (used when a player hosts from the game's menu): the server shuts itself down when
+## nobody has been connected for a while, so it never lingers in the background.
 ##
 ## Protocol: JSON text messages {"t": type, ...}; the world snapshot travels as binary
 ## chunks between "world_begin" and "world_end".
@@ -68,6 +70,12 @@ var _balance := {}
 var _items := {}
 ## Sites discovered in this world (saved per seed in server.cfg).
 var _discovered: Array = []
+## --quit-when-empty: seconds without any player, and whether anyone has joined yet.
+var _quit_when_empty := false
+var _empty_time := 0.0
+var _had_players := false
+const EMPTY_QUIT_AFTER := 20.0
+const NOBODY_QUIT_AFTER := 300.0
 var _next_item := 1
 
 
@@ -75,6 +83,7 @@ func _ready() -> void:
 	Engine.max_fps = 60
 	var args := _parse_args()
 	var port := int(args.get("port", DEFAULT_PORT))
+	_quit_when_empty = args.has("quit-when-empty")
 	var cfg := ConfigFile.new()
 	cfg.load(CONFIG)
 	if args.has("seed"):
@@ -162,6 +171,16 @@ func _process(delta: float) -> void:
 		_accept(_tcp.take_connection())
 	for id in _clients.keys():
 		_poll(_clients[id], delta)
+	if _quit_when_empty:
+		if _joined_count() > 0:
+			_had_players = true
+			_empty_time = 0.0
+		else:
+			_empty_time += delta
+			if _empty_time > (EMPTY_QUIT_AFTER if _had_players else NOBODY_QUIT_AFTER):
+				print("Nobody is connected any more - shutting down.")
+				get_tree().quit()
+				return
 	_tick_acc += delta
 	if _tick_acc >= 1.0 / TICK_RATE:
 		_tick_acc = fmod(_tick_acc, 1.0 / TICK_RATE)
